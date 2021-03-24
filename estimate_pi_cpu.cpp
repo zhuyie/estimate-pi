@@ -112,6 +112,7 @@ int main(int argc, char* argv[])
     fprintf(stdout, "samples = %lld\n", (long long)num_samples);
     fprintf(stdout, "duration = %.2fms\n", duration.count()/1000.0);
     fprintf(stdout, "pi = %f (%f%% error)\n", pi, error);
+    fprintf(stdout, "\n");
 
     delete []rnd;
     delete []in_points;

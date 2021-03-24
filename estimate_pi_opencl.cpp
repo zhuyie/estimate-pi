@@ -257,6 +257,7 @@ int main(int argc, char* argv[])
     fprintf(stdout, "samples = %lld\n", (long long)(ITERS_PER_THREAD * N_THREADS));
     fprintf(stdout, "duration = %.2fms\n", duration.count()/1000.0);
     fprintf(stdout, "pi = %f (%f%% error)\n", pi, error);
+    fprintf(stdout, "\n");
 
     // Shutdown and cleanup
     clReleaseMemObject(seeds);
