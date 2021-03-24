@@ -4,10 +4,16 @@ project(estimate-pi)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(estimate_pi_cpu 
-    estimate_pi_cpu.cpp)
+add_executable(estimate_pi_cpu estimate_pi_cpu.cpp)
 
-add_executable(estimate_pi_opencl
-    estimate_pi_opencl.cpp)
-target_link_libraries(estimate_pi_opencl
-    "-framework OpenCL")
+add_executable(estimate_pi_opencl estimate_pi_opencl.cpp)
+
+if (MSVC)
+target_include_directories(estimate_pi_opencl PUBLIC "$ENV{OCL_ROOT}/include")
+target_link_directories(estimate_pi_opencl PUBLIC "$ENV{OCL_ROOT}/lib/x86")
+target_link_libraries(estimate_pi_opencl "opencl.lib")
+endif()
+
+if (APPLE)
+target_link_libraries(estimate_pi_opencl "-framework OpenCL")
+endif()

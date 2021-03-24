@@ -2,6 +2,8 @@
 #include <cstdlib>
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
+#else
+#include <CL/cl.h>
 #endif
 
 #include <vector>
@@ -134,11 +136,21 @@ int main(int argc, char* argv[])
 {
     int err;
 
-    const int MAX_DEVICES = 4;
-    cl_device_id deviceIDs[MAX_DEVICES] = { 0 };
+    const int MAX_PLATFORMS = 2;
+    const int MAX_DEVICES = 8;
+    cl_platform_id platformIDs[MAX_PLATFORMS] = {0};
+    cl_device_id deviceIDs[MAX_DEVICES] = {0};
+    cl_uint numPlatforms = 0;
     cl_uint numDevices = 0;
-    err = clGetDeviceIDs(NULL, CL_DEVICE_TYPE_GPU, MAX_DEVICES, deviceIDs, &numDevices);
-    CL_CHECK_SUCCESS(err, "Error: Failed to get device ID!\n");
+    err = clGetPlatformIDs(MAX_PLATFORMS, platformIDs, &numPlatforms);
+    CL_CHECK_SUCCESS(err, "Error: Failed to get platform ID!\n");
+    for (cl_uint i = 0; i < numPlatforms; i++)
+    {
+        cl_uint num = 0;
+        err = clGetDeviceIDs(platformIDs[i], CL_DEVICE_TYPE_GPU, MAX_DEVICES-numDevices, deviceIDs+numDevices, &num);
+        CL_CHECK_SUCCESS(err, "Error: Failed to get device ID!\n");
+        numDevices += num;
+    }
     if (numDevices == 0)
     {
         fprintf(stderr, "Error: no GPU found\n");
@@ -146,15 +158,15 @@ int main(int argc, char* argv[])
     }
     for (cl_uint i = 0; i < numDevices; i++)
     {
-        char deviceName[101] = { 0 };
+        char deviceName[101] = {0};
         clGetDeviceInfo(deviceIDs[i], CL_DEVICE_NAME, 100, deviceName, NULL);
-        fprintf(stdout, "Device_%d: %s\n", i+1, deviceName);
+        fprintf(stdout, "Device_%d: %s\n", i + 1, deviceName);
 
-        char deviceVersion[101] = { 0 };
+        char deviceVersion[101] = {0};
         clGetDeviceInfo(deviceIDs[i], CL_DEVICE_VERSION, 100, deviceVersion, NULL);
         fprintf(stdout, "    Hardware version: %s\n", deviceVersion);
 
-        char driverVersion[101] = { 0 };
+        char driverVersion[101] = {0};
         clGetDeviceInfo(deviceIDs[i], CL_DRIVER_VERSION, 100, driverVersion, NULL);
         fprintf(stdout, "    Software version: %s\n", driverVersion);
     }
@@ -164,7 +176,7 @@ int main(int argc, char* argv[])
     if (argc > 1)
     {
         device_index = atoi(argv[1]) - 1;
-        if (device_index < 0 || device_index >= numDevices)
+        if (device_index < 0 || device_index >= (int)numDevices)
         {
             fprintf(stderr, "Invalid device_index!\n");
             return EXIT_FAILURE;
