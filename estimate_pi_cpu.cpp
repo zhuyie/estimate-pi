@@ -33,25 +33,20 @@ public:
     }
 };
 
-union Counter
-{
-    int64_t value;
-    char __padding[64];  // padding to cache line size
-    Counter() : value(0) { }
-};
-
-void worker(int worker_id, int64_t samples, RandomNumber *rnd, Counter *in)
+void worker(int worker_id, int64_t samples, RandomNumber *rnd, int64_t *in)
 {
     rnd->seed(worker_id);  // seed the prng 
+    int64_t localCounter = 0;
     for (int64_t i = 0; i < samples; i++)
     {
         float x = (*rnd)();
         float y = (*rnd)();
         if (x*x + y*y <= 1)
         {
-            (in->value)++;
+            localCounter++;
         }
     }
+    *in = localCounter;
 }
 
 int main(int argc, char* argv[])
@@ -74,7 +69,7 @@ int main(int argc, char* argv[])
     auto start = system_clock::now();
 
     RandomNumber* rnd = new RandomNumber[num_threads];
-    Counter* in_points = new Counter[num_threads];
+    int64_t* in_points = new int64_t[num_threads];
 
     int64_t total_points = num_samples;
     int64_t circle_points = 0;
@@ -93,13 +88,13 @@ int main(int argc, char* argv[])
         for (int i = 0; i < num_threads; i++)
         {
             threads[i].join();
-            circle_points += in_points[i].value;
+            circle_points += in_points[i];
         }
     }
     else
     {
         worker(0, total_points, &(rnd[0]), &(in_points[0]));
-        circle_points = in_points[0].value;
+        circle_points = in_points[0];
     }
 
     double pi = 4 * circle_points / (double)total_points;
