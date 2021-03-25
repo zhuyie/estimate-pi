@@ -18,14 +18,14 @@ static void usage()
 class RandomNumber
 {
     mt19937 gen_;  // random number generator
-    uniform_real_distribution<double> dist_;  // uniform distribution in [0,1)
+    const float MT19937_FLOAT_MULTI = 2.3283064365386962890625e-10f; // (2^32-1)^-1
 public:
-    RandomNumber() : gen_(), dist_(0, 1.0)
+    RandomNumber() : gen_()
     {
     }
-    double operator() ()
+    float operator() ()
     {
-        return dist_(gen_);
+        return gen_() * MT19937_FLOAT_MULTI;
     }
     void seed(unsigned int z)
     {
@@ -45,8 +45,8 @@ void worker(int worker_id, int64_t samples, RandomNumber *rnd, Counter *in)
     rnd->seed(worker_id);  // seed the prng 
     for (int64_t i = 0; i < samples; i++)
     {
-        double x = (*rnd)();
-        double y = (*rnd)();
+        float x = (*rnd)();
+        float y = (*rnd)();
         if (x*x + y*y <= 1)
         {
             (in->value)++;
