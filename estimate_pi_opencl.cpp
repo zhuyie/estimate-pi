@@ -9,107 +9,89 @@
 #include <vector>
 #include <random>
 #include <chrono>
+#include <fstream>
+#include <memory>
 using namespace std;
 using namespace std::chrono;
 
-static const char* kernelSource = R"(
-#define MT19937_FLOAT_MULTI 2.3283064365386962890625e-10f
-
-#define MT19937_N 624
-#define MT19937_M 397
-#define MT19937_MATRIX_A 0x9908b0df   /* constant vector a */
-#define MT19937_UPPER_MASK 0x80000000 /* most significant w-r bits */
-#define MT19937_LOWER_MASK 0x7fffffff /* least significant r bits */
-
-/**
-State of MT19937 RNG.
-*/
-typedef struct{
-	uint mt[MT19937_N]; /* the array for the state vector  */
-	int mti;
-} mt19937_state;
-
-/**
-Generates a random 32-bit unsigned integer using MT19937 RNG.
-
-@param state State of the RNG to use.
-*/
-#define mt19937_uint(state) _mt19937_uint(&state)
-uint _mt19937_uint(mt19937_state* state){
-    uint y;
-    uint mag01[2]={0x0, MT19937_MATRIX_A};
-    /* mag01[x] = x * MT19937_MATRIX_A  for x=0,1 */
-	
-	if(state->mti<MT19937_N-MT19937_M){
-		y = (state->mt[state->mti]&MT19937_UPPER_MASK)|(state->mt[state->mti+1]&MT19937_LOWER_MASK);
-		state->mt[state->mti] = state->mt[state->mti+MT19937_M] ^ (y >> 1) ^ mag01[y & 0x1];
-	}
-	else if(state->mti<MT19937_N-1){
-		y = (state->mt[state->mti]&MT19937_UPPER_MASK)|(state->mt[state->mti+1]&MT19937_LOWER_MASK);
-		state->mt[state->mti] = state->mt[state->mti+(MT19937_M-MT19937_N)] ^ (y >> 1) ^ mag01[y & 0x1];
-	}
-	else{
-        y = (state->mt[MT19937_N-1]&MT19937_UPPER_MASK)|(state->mt[0]&MT19937_LOWER_MASK);
-        state->mt[MT19937_N-1] = state->mt[MT19937_M-1] ^ (y >> 1) ^ mag01[y & 0x1];
-        state->mti = 0;
-	}
-    y = state->mt[state->mti++];
-		
-    /* Tempering */
-    y ^= (y >> 11);
-    y ^= (y << 7) & 0x9d2c5680;
-    y ^= (y << 15) & 0xefc60000;
-    y ^= (y >> 18);
-
-    return y;
-}
-
-/**
-Seeds MT19937 RNG.
-
-@param state Variable, that holds state of the generator to be seeded.
-@param seed Value used for seeding. Should be randomly generated for each instance of generator (thread).
-*/
-void mt19937_seed(mt19937_state* state, uint s){
-    state->mt[0]= s;
-	uint mti;
-    for (mti=1; mti<MT19937_N; mti++) {
-        state->mt[mti] = 1812433253 * (state->mt[mti-1] ^ (state->mt[mti-1] >> 30)) + mti;
-		
-        /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
-        /* In the previous versions, MSBs of the seed affect   */
-        /* only MSBs of the array mt19937[].                        */
-        /* 2002/01/09 modified by Makoto Matsumoto             */
-    }
-	state->mti=mti;
-}
-
-/**
-Generates a random float using MT19937 RNG.
-
-@param state State of the RNG to use.
-*/
-#define mt19937_float(state) (mt19937_uint(state)*MT19937_FLOAT_MULTI)
-
-
-__kernel void pi(uint iters, __global uint* seed, __global uint* res)
+class CLSource
 {
-    uint gid = get_global_id(0);
-    mt19937_state state;
-    mt19937_seed(&state, seed[gid]);
-    uint cnt = 0;
-    for (uint i = 0; i < iters; i++)
+    std::string data_;
+public:
+    CLSource()
     {
-        float a = mt19937_float(state);
-        float b = mt19937_float(state);
-        if (a * a + b * b <= 1.0f)
-        {
-            cnt++;
-        }
     }
-    res[gid] = cnt;
+    const std::string& data() const
+    {
+        return data_;
+    }
+    bool load(const std::string& filename)
+    {
+        std::ifstream f(filename);
+        if (!f.good())
+            return false;
+        f.seekg(0, std::ios::end);
+        size_t size = f.tellg();
+        data_.resize(size);
+        f.seekg(0);
+        f.read(&data_[0], size);
+        if (data_.empty() || data_.back() != '\n')
+            data_.append(1, '\n');
+        return true;
+    }
+    int resolveInclude(const std::string& name, const CLSource& inc)
+    {
+        int n = 0;
+        std::string incStr0 = "#include <" + name + ">";
+        std::string incStr1 = "#include \"" + name + "\"";
+        for (;;)
+        {
+            auto startPos = data_.find(incStr0);
+            if (startPos != std::string::npos)
+            {
+                data_.replace(startPos, incStr0.length(), inc.data());
+                n++;
+                continue;
+            }
+            startPos = data_.find(incStr1);
+            if (startPos != std::string::npos)
+            {
+                data_.replace(startPos, incStr1.length(), inc.data());
+                n++;
+                continue;
+            }
+            break;
+        }
+        return n;
+    }
+};
+
+static bool loadSource(const std::string& dir, CLSource& src)
+{
+    CLSource mt19937;
+    if (!mt19937.load(dir + "/3rdparty/RandomCL/generators/mt19937.cl"))
+        return false;
+
+    CLSource tinymt32, tinymt, tinymt32_jump_table, tinymt32def;
+    if (!tinymt32.load(dir + "/3rdparty/RandomCL/generators/TinyMT/tinymt32_jump.clh"))
+        return false;
+    if (!tinymt.load(dir + "/3rdparty/RandomCL/generators/TinyMT/tinymt.clh"))
+        return false;
+    if (!tinymt32_jump_table.load(dir + "/3rdparty/RandomCL/generators/TinyMT/tinymt32_jump_table.clh"))
+        return false;
+    if (!tinymt32def.load(dir + "/3rdparty/RandomCL/generators/TinyMT/tinymt32def.h"))
+        return false;
+    tinymt32.resolveInclude("tinymt.clh", tinymt);
+    tinymt32.resolveInclude("tinymt32_jump_table.clh", tinymt32_jump_table);
+    tinymt32.resolveInclude("tinymt32def.h", tinymt32def);
+
+    if (!src.load(dir + "/pi.cl"))
+        return false;
+    src.resolveInclude("mt19937.cl", mt19937);
+    src.resolveInclude("tinymt32_jump.clh", tinymt32);
+
+    return true;
 }
-)";
 
 #define CL_CHECK_RESULT(res, msg) \
 do {                              \
@@ -134,8 +116,14 @@ do {                               \
 
 int main(int argc, char* argv[])
 {
-    int err;
+    CLSource src;
+    if (!loadSource("..", src))
+    {
+        fprintf(stderr, "Error: Can not load source\n");
+        return EXIT_FAILURE;
+    }
 
+    int err;
     const int MAX_PLATFORMS = 2;
     const int MAX_DEVICES = 8;
     cl_platform_id platformIDs[MAX_PLATFORMS] = {0};
@@ -188,79 +176,92 @@ int main(int argc, char* argv[])
     // Create a compute context
     cl_context context = clCreateContext(0, 1, &device, NULL, NULL, &err);
     CL_CHECK_RESULT(context, "Error: Failed to create a compute context!\n");
-    
+
     // Create a command queue
     cl_command_queue commands = clCreateCommandQueue(context, device, 0, &err);
     CL_CHECK_RESULT(commands, "Error: Failed to create a command queue!\n");
-    
+
     // Create the compute program from the source buffer
-    cl_program program = clCreateProgramWithSource(context, 1, (const char **)&kernelSource, NULL, &err);
+    const char* strings[1] = { src.data().c_str() };
+    cl_program program = clCreateProgramWithSource(context, 1, (const char **)strings, NULL, &err);
     CL_CHECK_RESULT(program, "Error: Failed to create compute program!\n");
-    
+
     // Build the program
     err = clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
+    if (err != CL_SUCCESS)
+    {
+        size_t len;
+        char buffer[2048];
+        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, sizeof(buffer), buffer, &len);
+        fprintf(stderr, "%s\n", buffer);
+    }
     CL_CHECK_SUCCESS(err, "Error: Failed to build program!\n");
-    
+
     // Create the compute kernel
-    cl_kernel kernel = clCreateKernel(program, "pi", &err);
+    cl_kernel kernel = clCreateKernel(program, "pi_v2", &err);
     CL_CHECK_RESULT(kernel, "Error: Failed to create compute kernel!\n");
 
     auto start = system_clock::now();
 
+    size_t max_workgroup_size = 0;
+    cl_uint max_workitem_dims = 0;
+    err = clGetDeviceInfo(device, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(size_t), &max_workgroup_size, NULL);
+    CL_CHECK_SUCCESS(err, "Error: Failed to query CL_DEVICE_MAX_WORK_GROUP_SIZE!\n");
+    err = clGetDeviceInfo(device, CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS, sizeof(cl_uint), &max_workitem_dims, NULL);
+    CL_CHECK_SUCCESS(err, "Error: Failed to query CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS!\n");
+    unique_ptr<size_t[]> max_workitem_sizes(new size_t[max_workitem_dims]);
+    err = clGetDeviceInfo(device, CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(size_t)*max_workitem_dims, max_workitem_sizes.get(), NULL);
+    CL_CHECK_SUCCESS(err, "Error: Failed to query CL_DEVICE_MAX_WORK_ITEM_SIZES!\n");
+    // Calculate global_work_size/local_work_size
+    size_t local_work_size = std::min(max_workgroup_size, max_workitem_sizes[0]);
+    size_t global_work_size = ((N_THREADS - 1) / local_work_size + 1) * local_work_size;
+
     // Prepare input && output buffer
-    cl_mem seeds = clCreateBuffer(context,  CL_MEM_READ_ONLY,  sizeof(cl_uint) * N_THREADS, NULL, NULL);
-    cl_mem results = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint) * N_THREADS, NULL, NULL);
-    CL_CHECK_RESULT(seeds && results, "Error: Failed to allocate device memory!\n");
-    vector<cl_uint> host_seeds(N_THREADS);
-    mt19937 rnd;
-    for (int i = 0; i < N_THREADS; i++)
-    {
-        host_seeds[i] = rnd();
-    }
-    err = clEnqueueWriteBuffer(commands, seeds, CL_TRUE, 0, sizeof(cl_uint) * N_THREADS, &host_seeds[0], 0, NULL, NULL);
-    CL_CHECK_SUCCESS(err, "Error: Failed to write to input buffer!\n");
+    cl_mem results = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint) * global_work_size, NULL, NULL);
+    CL_CHECK_RESULT(results, "Error: Failed to allocate device memory!\n");
 
     // Set the arguments to our compute kernel
     cl_uint iters = ITERS_PER_THREAD;
+    cl_uint seed = 42;
     err  = clSetKernelArg(kernel, 0, sizeof(cl_uint), &iters);
-    err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &seeds);
+    err |= clSetKernelArg(kernel, 1, sizeof(cl_uint), &seed);
     err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &results);
     CL_CHECK_SUCCESS(err, "Error: Failed to set kernel arguments!\n");
 
     // Execute the kernel
-    size_t global_workitems = N_THREADS;
-    err = clEnqueueNDRangeKernel(commands, kernel, 1, NULL, &global_workitems, NULL, 0, NULL, NULL);
+    err = clEnqueueNDRangeKernel(commands, kernel, 1, NULL, &global_work_size, &local_work_size, 0, NULL, NULL);
     CL_CHECK_SUCCESS(err, "Error: Failed to execute kernel!\n");
 
     // Blocks until commands have completed
     clFinish(commands);
 
     // Read back the results from the device
-    vector<cl_uint> host_results(N_THREADS);
-    err = clEnqueueReadBuffer(commands, results, CL_TRUE, 0, sizeof(cl_uint) * N_THREADS, &host_results[0], 0, NULL, NULL);
+    vector<cl_uint> host_results(global_work_size);
+    err = clEnqueueReadBuffer(commands, results, CL_TRUE, 0, sizeof(cl_uint) * global_work_size, &host_results[0], 0, NULL, NULL);
     CL_CHECK_SUCCESS(err, "Error: Failed to read output buffer!\n");
-    
+
     // Calculate pi
     cl_ulong total = 0;
     for (cl_uint threadCount : host_results) 
     {
         total += threadCount;
     }
-    double pi = static_cast<double>(total) / (ITERS_PER_THREAD * N_THREADS) * 4;
+    double pi = static_cast<double>(total) / (ITERS_PER_THREAD * global_work_size) * 4;
     double pi_true = acos(-1.0);  // true value of pi
     double error = abs(pi - pi_true) / pi_true * 100;
-    
+
     auto duration = duration_cast<microseconds>(system_clock::now() - start);
-    
-    fprintf(stdout, "threads = %d\n", N_THREADS);
+
+    fprintf(stdout, "local_work_size = %d\n", (unsigned int)local_work_size);
+    fprintf(stdout, "global_work_size = %d\n", (unsigned int)global_work_size);
     fprintf(stdout, "iterates = %d\n", ITERS_PER_THREAD);
-    fprintf(stdout, "samples = %lld\n", (long long)(ITERS_PER_THREAD * N_THREADS));
+    fprintf(stdout, "samples = %lld (%lld required)\n", 
+        (long long)(ITERS_PER_THREAD * global_work_size), (long long)(ITERS_PER_THREAD * N_THREADS));
     fprintf(stdout, "duration = %.2fms\n", duration.count()/1000.0);
     fprintf(stdout, "pi = %f (%f%% error)\n", pi, error);
     fprintf(stdout, "\n");
 
     // Shutdown and cleanup
-    clReleaseMemObject(seeds);
     clReleaseMemObject(results);
     clReleaseKernel(kernel);
     clReleaseProgram(program);
