@@ -6,6 +6,12 @@
 #include <CL/cl.h>
 #endif
 
+#ifdef _WIN32
+#define NOMINMAX
+#include "GPAInterfaceLoader.h"
+#define GPA_ENABLED 1
+#endif
+
 #include <vector>
 #include <random>
 #include <chrono>
@@ -13,6 +19,8 @@
 #include <memory>
 using namespace std;
 using namespace std::chrono;
+
+//------------------------------------------------------------------------------
 
 class CLSource
 {
@@ -98,6 +106,172 @@ static bool loadSource(const std::string& dir, CLSource& src)
     return true;
 }
 
+//------------------------------------------------------------------------------
+
+#if GPA_ENABLED
+GPAApiManager* GPAApiManager::m_pGpaApiManager = nullptr;
+GPAFuncTableInfo* g_pFuncTableInfo = nullptr;
+GPAFunctionTable* pGpaFunctionTable = nullptr;
+GPA_ContextId gpaContextId = nullptr;
+GPA_SessionId gpaSessionId = nullptr;
+GPA_CommandListId gpaCommandListId = nullptr;
+bool gpaInitOK = false;
+#endif
+
+static bool GPA_Init(cl_command_queue context, unsigned int &passRequired)
+{
+#if GPA_ENABLED
+    GPA_Status status;
+    status = GPAApiManager::Instance()->LoadApi(GPA_API_OPENCL);
+    if (status != GPA_STATUS_OK)
+        return false;
+    pGpaFunctionTable = GPAApiManager::Instance()->GetFunctionTable(GPA_API_OPENCL);
+    if (nullptr == pGpaFunctionTable)
+        return false;
+    status = pGpaFunctionTable->GPA_Initialize(GPA_INITIALIZE_DEFAULT_BIT);
+    if (status != GPA_STATUS_OK)
+        return false;
+    status = pGpaFunctionTable->GPA_OpenContext(context, GPA_OPENCONTEXT_DEFAULT_BIT, &gpaContextId);
+    if (status != GPA_STATUS_OK)
+        return false;
+
+    status = pGpaFunctionTable->GPA_CreateSession(gpaContextId, GPA_SESSION_SAMPLE_TYPE_DISCRETE_COUNTER, &gpaSessionId);
+    if (status != GPA_STATUS_OK)
+        return false;
+    status = pGpaFunctionTable->GPA_EnableAllCounters(gpaSessionId);
+    if (status != GPA_STATUS_OK)
+        return false;
+    status = pGpaFunctionTable->GPA_GetPassCount(gpaSessionId, &passRequired);
+    if (status != GPA_STATUS_OK)
+        return false;
+    status = pGpaFunctionTable->GPA_BeginSession(gpaSessionId);
+    if (status != GPA_STATUS_OK)
+        return false;
+
+    gpaInitOK = true;
+    return true;
+#else
+    return false;
+#endif
+}
+
+static bool GPA_BeginPass(unsigned int pass)
+{
+#if GPA_ENABLED
+    if (!gpaInitOK)
+        return true;
+
+    GPA_Status status = pGpaFunctionTable->GPA_BeginCommandList(
+        gpaSessionId, pass, GPA_NULL_COMMAND_LIST, GPA_COMMAND_LIST_NONE, &gpaCommandListId);
+    if (status != GPA_STATUS_OK)
+        return false;
+
+    status = pGpaFunctionTable->GPA_BeginSample(0, gpaCommandListId);
+    if (status != GPA_STATUS_OK)
+        return false;
+
+    return true;
+#else
+    return true;
+#endif
+}
+
+static bool GPA_EndPass(unsigned int pass)
+{
+#if GPA_ENABLED
+    if (!gpaInitOK)
+        return true;
+
+    if (gpaCommandListId)
+    {
+        GPA_Status status;
+        status = pGpaFunctionTable->GPA_EndSample(gpaCommandListId);
+        if (status != GPA_STATUS_OK)
+            return false;
+
+        status = pGpaFunctionTable->GPA_EndCommandList(gpaCommandListId);
+        if (status != GPA_STATUS_OK)
+            return false;
+
+        for (;;)
+        {
+            status = pGpaFunctionTable->GPA_IsPassComplete(gpaSessionId, pass);
+            if (status == GPA_STATUS_OK)
+                break;
+        }
+
+        gpaCommandListId = nullptr;
+    }
+
+    return true;
+#else
+    return true;
+#endif
+}
+
+static void GPA_Uninit()
+{
+#if GPA_ENABLED
+    GPA_Status status;
+    if (pGpaFunctionTable)
+    {
+        if (gpaSessionId)
+        {
+            status = pGpaFunctionTable->GPA_EndSession(gpaSessionId);
+            if (status != GPA_STATUS_OK)
+                fprintf(stderr, "GPA_EndSession failed, status=%d\n", status);
+
+            size_t resultSize = 0;
+            status = pGpaFunctionTable->GPA_GetSampleResultSize(gpaSessionId, 0, &resultSize);
+            if (status != GPA_STATUS_OK || resultSize == 0)
+                fprintf(stderr, "GPA_GetSampleResultSize failed, status=%d, resultSize=%u\n", 
+                    status, (unsigned int)resultSize);
+
+            vector<unsigned char> resultData(resultSize);
+            status = pGpaFunctionTable->GPA_GetSampleResult(gpaSessionId, 0, resultSize, &resultData[0]);
+            if (status != GPA_STATUS_OK)
+                fprintf(stderr, "GPA_GetSampleResult failed, status=%d\n", status);
+
+            fprintf(stdout, "-------- GPA RESULT --------\n");
+            gpa_uint32 numCounters = 0;
+            pGpaFunctionTable->GPA_GetNumEnabledCounters(gpaSessionId, &numCounters);
+            for (gpa_uint32 i = 0; i < numCounters; i++)
+            {
+                gpa_uint32 enabledIndex = 0;
+                pGpaFunctionTable->GPA_GetEnabledIndex(gpaSessionId, i, &enabledIndex);
+                const char* name = nullptr;
+                pGpaFunctionTable->GPA_GetCounterName(gpaContextId, enabledIndex, &name);
+                GPA_Data_Type dt = GPA_DATA_TYPE_FLOAT64;
+                pGpaFunctionTable->GPA_GetCounterDataType(gpaContextId, enabledIndex, &dt);
+                if (dt == GPA_DATA_TYPE_FLOAT64)
+                {
+                    gpa_float64 val = *(reinterpret_cast<gpa_float64*>(&resultData[0]) + i);
+                    fprintf(stdout, "%02u_%s: %.4f\n", i + 1, name, val);
+                }
+                else if (dt == GPA_DATA_TYPE_UINT64)
+                {
+                    gpa_uint64 val = *(reinterpret_cast<gpa_uint64*>(&resultData[0]) + i);
+                    fprintf(stdout, "%02u_%s: %llu\n", i + 1, name, (unsigned long long)val);
+                }
+            }
+            fprintf(stdout, "\n");
+        }
+        if (gpaContextId)
+        {
+            pGpaFunctionTable->GPA_CloseContext(gpaContextId);
+            gpaContextId = nullptr;
+        }
+        pGpaFunctionTable->GPA_Destroy();
+        pGpaFunctionTable = nullptr;
+    }
+    GPAApiManager::Instance()->UnloadApi(GPA_API_OPENCL);
+#else
+    // do nothing
+#endif
+}
+
+//------------------------------------------------------------------------------
+
 #define CL_CHECK_RESULT(res, msg) \
 do {                              \
     if (!(res))                   \
@@ -121,6 +295,20 @@ do {                               \
 
 int main(int argc, char* argv[])
 {
+    int deviceIndex = 1;
+    const char* kernelName = "pi_v2";
+    bool profiling = true;
+    if (argc >= 2)
+        deviceIndex = atoi(argv[1]);
+    if (argc >= 3)
+        kernelName = argv[2];
+    if (argc >= 4)
+        profiling = (strcmp(argv[3], "1") == 0);
+    fprintf(stdout, "device_index: %d\n", deviceIndex);
+    fprintf(stdout, "kernel: %s\n", kernelName);
+    fprintf(stdout, "profiling: %d\n", profiling ? 1 : 0);
+    fprintf(stdout, "\n");
+
     CLSource src;
     if (!loadSource("..", src))
     {
@@ -165,18 +353,13 @@ int main(int argc, char* argv[])
     }
     fprintf(stdout, "\n");
 
-    int device_index = 0;
-    if (argc > 1)
+    if (deviceIndex <= 0 || deviceIndex > (int)numDevices)
     {
-        device_index = atoi(argv[1]) - 1;
-        if (device_index < 0 || device_index >= (int)numDevices)
-        {
-            fprintf(stderr, "Invalid device_index '%s'!\n", argv[1]);
-            return EXIT_FAILURE;
-        }
+         fprintf(stderr, "Invalid device_index!\n");
+         return EXIT_FAILURE;
     }
-    fprintf(stdout, "Selected Device: Device_%d\n\n", device_index + 1);
-    cl_device_id device = deviceIDs[device_index];
+    fprintf(stdout, "Selected Device: Device_%d\n\n", deviceIndex);
+    cl_device_id device = deviceIDs[deviceIndex - 1];
 
     // Create a compute context
     cl_context context = clCreateContext(0, 1, &device, NULL, NULL, &err);
@@ -203,8 +386,22 @@ int main(int argc, char* argv[])
     CL_CHECK_SUCCESS(err, "Error: Failed to build program!\n");
 
     // Create the compute kernel
-    cl_kernel kernel = clCreateKernel(program, "pi_v2", &err);
+    cl_kernel kernel = clCreateKernel(program, kernelName, &err);
     CL_CHECK_RESULT(kernel, "Error: Failed to create compute kernel!\n");
+
+    unsigned int numPasses = 1;
+    if (profiling)
+    {
+        if (GPA_Init(commands, numPasses))
+        {
+            fprintf(stdout, "GPA init OK, numPasses=%u\n\n", numPasses);
+        }
+        else
+        {
+            fprintf(stderr, "GPA init failed\n\n");
+            numPasses = 1;
+        }
+    }
 
     auto start = system_clock::now();
 
@@ -233,9 +430,18 @@ int main(int argc, char* argv[])
     err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &results);
     CL_CHECK_SUCCESS(err, "Error: Failed to set kernel arguments!\n");
 
-    // Execute the kernel
-    err = clEnqueueNDRangeKernel(commands, kernel, 1, NULL, &global_work_size, &local_work_size, 0, NULL, NULL);
-    CL_CHECK_SUCCESS(err, "Error: Failed to execute kernel!\n");
+    for (unsigned int pass = 0; pass < numPasses; pass++)
+    {
+        if (!GPA_BeginPass(pass))
+            fprintf(stderr, "GPA_BeginPass failed, pass=%u\n", pass);
+
+        // Execute the kernel
+        err = clEnqueueNDRangeKernel(commands, kernel, 1, NULL, &global_work_size, &local_work_size, 0, NULL, NULL);
+        CL_CHECK_SUCCESS(err, "Error: Failed to execute kernel!\n");
+
+        if (!GPA_EndPass(pass))
+            fprintf(stderr, "GPA_EndPass failed, pass=%u\n", pass);
+    }
 
     // Blocks until commands have completed
     clFinish(commands);
@@ -262,9 +468,11 @@ int main(int argc, char* argv[])
     fprintf(stdout, "iterates = %d\n", ITERS_PER_THREAD);
     fprintf(stdout, "samples = %lld (%lld required)\n", 
         (long long)(ITERS_PER_THREAD * global_work_size), (long long)(ITERS_PER_THREAD * N_THREADS));
-    fprintf(stdout, "duration = %.2fms\n", duration.count()/1000.0);
+    fprintf(stdout, "duration = %.2fms\n", duration.count()/(1000.0*numPasses));
     fprintf(stdout, "pi = %f (%f%% error)\n", pi, error);
     fprintf(stdout, "\n");
+
+    GPA_Uninit();
 
     // Shutdown and cleanup
     clReleaseMemObject(results);
