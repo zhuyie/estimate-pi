@@ -1,0 +1,846 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Usage &mdash; GPUPerfAPI 3.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="GPUPerfAPI 3.7 documentation" href="index.html"/>
+        <link rel="next" title="Performance Counters" href="counters.html"/>
+        <link rel="prev" title="Introduction" href="intro.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> GPUPerfAPI
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-the-gpuperfapi-library">Loading the GPUPerfAPI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#registering-a-logging-callback">Registering a Logging Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initializing-and-destroying-a-gpuperfapi-instance">Initializing and Destroying a GPUPerfAPI Instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opening-and-closing-a-context">Opening and Closing a Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#querying-a-context-and-counters">Querying a Context and Counters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-and-using-a-session">Creating and Using a Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enabling-counters-on-a-session">Enabling Counters on a Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#querying-enabled-counters-and-counter-scheduling">Querying Enabled Counters and Counter Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-and-managing-samples">Creating and Managing Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#querying-results">Querying Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#displaying-status-error">Displaying Status/Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-pass-counter-collection">Multi-pass Counter Collection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specific-usage-note-for-vulkan">Specific Usage Note for Vulkan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specific-usage-note-for-bundles-directx-12-and-secondary-command-buffers-vulkan">Specific Usage Note for Bundles (DirectX 12) and Secondary Command Buffers (Vulkan)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specific-usage-note-for-samples-that-start-and-end-on-different-command-lists">Specific Usage Note for Samples that Start and End on Different Command Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-gpuperfapi">Deploying GPUPerfAPI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="counters.html">Performance Counters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_api.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GPUPerfAPI</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>This page provides an overview of the GPUPerfAPI library. Please refer to
+<a class="reference internal" href="main_api.html#gpa-api-reference"><span class="std std-ref">the API Reference Page</span></a> for more information.</p>
+<div class="section" id="loading-the-gpuperfapi-library">
+<h2>Loading the GPUPerfAPI Library<a class="headerlink" href="#loading-the-gpuperfapi-library" title="Permalink to this headline">¶</a></h2>
+<p>GPUPerfAPI binary releases include separate library files for each
+supported API. The following table shows the name of the library files
+for each API</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">API</th>
+<th class="head">Library Names</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Vulkan</td>
+<td><div class="first last line-block">
+<div class="line">64-bit Windows: GPUPerfAPIVK-x64.dll</div>
+<div class="line">32-bit Windows: GPUPerfAPIVK.dll</div>
+<div class="line">64-bit Linux: libGPUPerfAPIVK.so</div>
+<div class="line">32-bit Linux: libGPUPerfAPIVK32.so</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>DirectX 12</td>
+<td><div class="first last line-block">
+<div class="line">64-bit Windows: GPUPerfAPIDX12-x64.dll</div>
+<div class="line">32-bit Windows: GPUPerfAPIDX12.dll</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>DirectX 11</td>
+<td><div class="first last line-block">
+<div class="line">64-bit Windows: GPUPerfAPIDX11-x64.dll</div>
+<div class="line">32-bit Windows: GPUPerfAPIDX11.dll</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>OpenGL</td>
+<td><div class="first last line-block">
+<div class="line">64-bit Windows: GPUPerfAPIGL-x64.dll</div>
+<div class="line">32-bit Windows: GPUPerfAPIGL.dll</div>
+<div class="line">64-bit Linux: libGPUPerfAPIGL.so</div>
+<div class="line">32-bit Linux: libGPUPerfAPIGL32.so</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>OpenCL</td>
+<td><div class="first last line-block">
+<div class="line">64-bit Windows: GPUPerfAPICL-x64.dll</div>
+<div class="line">32-bit Windows: GPUPerfAPICL.dll</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>To use the GPUPerfAPI library:</p>
+<ul class="simple">
+<li>Include the header file GPUPerfAPI.h. For Vulkan, include GPUPerfAPI-VK.h.</li>
+<li>Declare a variable of type GPA_GetFuncTablePtrType</li>
+<li>Load the GPUPerfAPI library<ul>
+<li>On Windows, use <code class="docutils literal"><span class="pre">LoadLibrary</span></code> on the GPUPerfAPI DLL for your chosen API (see
+above table)</li>
+<li>On Linux, use <code class="docutils literal"><span class="pre">dlopen</span></code> on the GPUPerfAPI shared library for your chosen API
+(see above table)</li>
+</ul>
+</li>
+<li>Get the address of the <code class="docutils literal"><span class="pre">GPA_GetFuncTable</span></code> function<ul>
+<li>On Windows, use <code class="docutils literal"><span class="pre">GetProcAddres</span></code></li>
+<li>On Linux, use <code class="docutils literal"><span class="pre">dlsym</span></code></li>
+</ul>
+</li>
+<li>Call GPA_GetFuncTable to get a table of function pointers for each API.</li>
+</ul>
+<p>All of the above can be simplified using the GPAInterfaceLoader.h C++ header
+file. This header file simplifies the loading and initialization of the GPA
+entrypoints. The following code shows how to use this header file to load and
+initialize the DirectX 12 version of GPA:</p>
+<div class="highlight-c++" id="gpa-load-and-init-sample"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;GPAInterfaceLoader.h&quot;</span><span class="cp"></span>
+
+<span class="n">GPAApiManager</span><span class="o">*</span> <span class="n">GPAApiManager</span><span class="o">::</span><span class="n">m_pGpaApiManager</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+<span class="n">GPAFunctionTable</span><span class="o">*</span> <span class="n">pGpaFunctionTable</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+<span class="kt">bool</span> <span class="nf">InitializeGPA</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">retVal</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">GPA_STATUS_OK</span> <span class="o">==</span> <span class="n">GPAApiManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">LoadApi</span><span class="p">(</span><span class="n">GPA_API_DIRECTX_12</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">pGpaFunctionTable</span> <span class="o">=</span> <span class="n">GPAApiManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetFunctionTable</span><span class="p">(</span><span class="n">GPA_API_DIRECTX_12</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="k">nullptr</span> <span class="o">!=</span> <span class="n">pGpaFunctionTable</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">retVal</span> <span class="o">=</span> <span class="n">GPA_STATUS_OK</span> <span class="o">==</span> <span class="n">pGpaFunctionTable</span><span class="o">-&gt;</span><span class="n">GPA_Initialize</span><span class="p">(</span><span class="n">GPA_INITIALIZE_DEFAULT_BIT</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">retVal</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="registering-a-logging-callback">
+<h2>Registering a Logging Callback<a class="headerlink" href="#registering-a-logging-callback" title="Permalink to this headline">¶</a></h2>
+<p>An entrypoint is available for registering a callback function which GPUPerfAPI
+will use to report back additional information about errors and general API
+usage. It is recommended that all GPUPerfAPI clients register a logging
+callback for error messages at a minimum. Any time a GPUPerfAPI function
+returns an error, it will output a log message with more information about the
+condition that caused the error.</p>
+<p>In order to use this feature, you must define a static function with the
+following signature:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">MyLoggingFunction</span><span class="p">(</span><span class="n">GPA_Logging_Type</span> <span class="n">messageType</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">message</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The function is registered using the GPA_RegisterLoggingCallback entrypoint.</p>
+<p>The function registered will receive callbacks for message types registered.
+The message type is passed into the logging function so that different message
+types can be handled differently if desired. For instance, errors could be
+output to <code class="docutils literal"><span class="pre">stderr</span></code> or be used to raise an assert, while messages and trace
+information could be output to an application’s or tool’s normal log file. A
+tool may also want to prefix log messages with a string representation of the
+log type before writing the message. The messages passed into the logging
+function will not have a newline at the end, allowing for more flexible
+handling of the message.</p>
+</div>
+<div class="section" id="initializing-and-destroying-a-gpuperfapi-instance">
+<h2>Initializing and Destroying a GPUPerfAPI Instance<a class="headerlink" href="#initializing-and-destroying-a-gpuperfapi-instance" title="Permalink to this headline">¶</a></h2>
+<p>GPUPerfAPI must be initialized before the rendering context or device is
+created, so that the driver can be prepared for accessing hardware data.
+In the case of DirectX 12 or Vulkan, initialization must be done before
+a queue is created. Once you are done using GPUPerfAPI, you should
+destroy the GPUPerfAPI instance. In the case of DirectX 12, destruction
+must be done before the device is destroyed.</p>
+<p>The following methods can be used to initialize and destroy GPUPerfAPI:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">GPA Initialization/Destruction Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_Initialize</td>
+<td>Initializes the driver so that counters are exposed.</td>
+</tr>
+<tr class="row-odd"><td>GPA_Destroy</td>
+<td>Undoes any initialization to ensure proper behavior in applications that are not being profiled.</td>
+</tr>
+</tbody>
+</table>
+<p>An example of the code used to initialize a GPUPerfAPI instance can be seen
+above in <a class="reference internal" href="#gpa-load-and-init-sample"><span class="std std-ref">the GPAInterfaceLoader sample code</span></a></p>
+</div>
+<div class="section" id="opening-and-closing-a-context">
+<h2>Opening and Closing a Context<a class="headerlink" href="#opening-and-closing-a-context" title="Permalink to this headline">¶</a></h2>
+<p>After initializing a GPUPerfAPI instance and after the necessary API-specific
+construct has been created, a context can be opened using the GPA_OpenContext
+function. Once a context is open, you can query the available performance
+counters and create and begin a session. After you are done using GPUPerfAPI,
+you should close the context.</p>
+<p>The following methods can be used to open and close contexts:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Context Handling Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_OpenContext</td>
+<td>Opens the counters in the specified context for reading.</td>
+</tr>
+<tr class="row-odd"><td>GPA_CloseContext</td>
+<td>Closes the counters in the specified context.</td>
+</tr>
+</tbody>
+</table>
+<p>When calling GPA_OpenContext, the type of the supplied <code class="docutils literal"><span class="pre">pContext</span></code> is
+different depending on which API is being used. See the table below for the
+required type which should be passed to GPA_OpenContext:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">API</th>
+<th class="head">GPA_OpenContext <code class="docutils literal"><span class="pre">pContext</span></code> Parameter Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Vulkan</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">GPA_vkContextOpenInfo*</span></code></div>
+<div class="line">(defined in GPUPerfAPI-Vk.h)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>DirectX 12</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">ID3D12Device*</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>DirectX 11</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">ID3D11Device*</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>OpenGL</td>
+<td><div class="first last line-block">
+<div class="line">Windows: <code class="docutils literal"><span class="pre">HGLRC</span></code></div>
+<div class="line">Linux: <code class="docutils literal"><span class="pre">GLXContext</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>OpenCL</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">cl_command_queue*</span></code></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="querying-a-context-and-counters">
+<h2>Querying a Context and Counters<a class="headerlink" href="#querying-a-context-and-counters" title="Permalink to this headline">¶</a></h2>
+<p>After creating a context, you can use the returned GPA_ContextId to query
+information about the context and the performance counters exposed by the
+context.</p>
+<p>The following methods can be used to query information about the context:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Context Query Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_GetSupportedSampleTypes</td>
+<td>Gets a mask of the sample types supported by the specified context.</td>
+</tr>
+<tr class="row-odd"><td>GPA_GetDeviceAndRevisionId</td>
+<td>Gets the GPU device and revision id associated with the specified context.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetDeviceName</td>
+<td>Gets the device name of the GPU associated with the specified context.</td>
+</tr>
+</tbody>
+</table>
+<p>The following methods can be used to query information about performance counters:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Counter Query Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_GetNumCounters</td>
+<td>Gets the number of counters available.</td>
+</tr>
+<tr class="row-odd"><td>GPA_GetCounterName</td>
+<td>Gets the name of the specified counter.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetCounterIndex</td>
+<td>Gets index of a counter given its name (case insensitive).</td>
+</tr>
+<tr class="row-odd"><td>GPA_GetCounterGroup</td>
+<td>Gets the group of the specified counter.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetCounterDescription</td>
+<td>Gets the description of the specified counter.</td>
+</tr>
+<tr class="row-odd"><td>GPA_GetCounterDataType</td>
+<td>Gets the data type of the specified counter.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetCounterUsageType</td>
+<td>Gets the usage type of the specified counter.</td>
+</tr>
+<tr class="row-odd"><td>GPA_GetCounterUuid</td>
+<td>Gets the UUID of the specified counter.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetCounterSampleType</td>
+<td>Gets the supported sample type of the specified counter.</td>
+</tr>
+<tr class="row-odd"><td>GPA_GetDataTypeAsStr</td>
+<td>Gets a string with the name of the specified counter data type.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetUsageTypeAsStr</td>
+<td>Gets a string with the name of the specified counter usage type.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="creating-and-using-a-session">
+<h2>Creating and Using a Session<a class="headerlink" href="#creating-and-using-a-session" title="Permalink to this headline">¶</a></h2>
+<p>After creating a context, a session can be created. A session is the
+container for enabling counters, sampling GPU workloads and storing results.</p>
+<p>The following methods can be used to manage sessions:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Session Handling Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_CreateSession</td>
+<td>Creates a session.</td>
+</tr>
+<tr class="row-odd"><td>GPA_DeleteSession</td>
+<td>Deletes a session object.</td>
+</tr>
+<tr class="row-even"><td>GPA_BeginSession</td>
+<td>Begins sampling with the currently enabled set of counters.</td>
+</tr>
+<tr class="row-odd"><td>GPA_EndSession</td>
+<td>Ends sampling with the currently enabled set of counters.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="enabling-counters-on-a-session">
+<h2>Enabling Counters on a Session<a class="headerlink" href="#enabling-counters-on-a-session" title="Permalink to this headline">¶</a></h2>
+<p>After creating a session but before sampling on that session, counters should
+be enabled. This must be done after GPA_CreateSession is called, but before
+GPA_BeginSession is called.</p>
+<p>The following methods can be used to enable/disable counters on a session:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Counter Enable/Disable Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_EnableCounter</td>
+<td>Enables a specified counter.</td>
+</tr>
+<tr class="row-odd"><td>GPA_DisableCounter</td>
+<td>Disables a specified counter.</td>
+</tr>
+<tr class="row-even"><td>GPA_EnableCounterByName</td>
+<td>Enables a specified counter using the counter name (case insensitive).</td>
+</tr>
+<tr class="row-odd"><td>GPA_DisableCounterByName</td>
+<td>Disables a specified counter using the counter name (case insensitive).</td>
+</tr>
+<tr class="row-even"><td>GPA_EnableAllCounters</td>
+<td>Enables all counters.</td>
+</tr>
+<tr class="row-odd"><td>GPA_DisableAllCounters</td>
+<td>Disables all counters.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="querying-enabled-counters-and-counter-scheduling">
+<h2>Querying Enabled Counters and Counter Scheduling<a class="headerlink" href="#querying-enabled-counters-and-counter-scheduling" title="Permalink to this headline">¶</a></h2>
+<p>A session can be also queried for information about which counters are enabled
+as well as information on the number of passes required for the current set of
+enabled counters.</p>
+<p>The following methods can be used to query enabled counters and counter
+scheduling on a session:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Counter Scheduling Query Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_GetPassCount</td>
+<td>Gets the number of passes required for the currently enabled set of counters.</td>
+</tr>
+<tr class="row-odd"><td>GPA_GetNumEnabledCounters</td>
+<td>Gets the number of enabled counters.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetEnabledIndex</td>
+<td>Gets the counter index for an enabled counter.</td>
+</tr>
+<tr class="row-odd"><td>GPA_IsCounterEnabled</td>
+<td>Checks whether or not a counter is enabled.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="creating-and-managing-samples">
+<h2>Creating and Managing Samples<a class="headerlink" href="#creating-and-managing-samples" title="Permalink to this headline">¶</a></h2>
+<p>After counters are enabled on a session and the session has been started, GPA
+command lists and samples can be created. A sample is the GPU workload for
+which performance counters are to be collected. All enabled counters will be
+collected for each sample. For DirectX 12 and Vulkan, <a class="reference internal" href="#specific-usage-multiple-command-lists"><span class="std std-ref">samples can start
+on one command list and end on another</span></a>.
+There is also <a class="reference internal" href="#specific-usage-bundles"><span class="std std-ref">special handling</span></a> needed for
+DirectX 12 bundles and Vulkan secondary command buffers.</p>
+<p>The following methods can be used to create and manage samples on a session:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Sample Handling Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_BeginCommandList</td>
+<td>Begins command list for sampling.</td>
+</tr>
+<tr class="row-odd"><td>GPA_EndCommandList</td>
+<td>Ends command list for sampling.</td>
+</tr>
+<tr class="row-even"><td>GPA_BeginSample</td>
+<td>Begins a sample in a command list.</td>
+</tr>
+<tr class="row-odd"><td>GPA_EndSample</td>
+<td>Ends a sample in a command list.</td>
+</tr>
+<tr class="row-even"><td>GPA_ContinueSampleOnCommandList</td>
+<td>Continues a primary command list sample on another primary command list.</td>
+</tr>
+<tr class="row-odd"><td>GPA_CopySecondarySamples</td>
+<td>Copies a set of samples from a secondary command list back to the primary command list that executed the secondary command list.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetSampleCount</td>
+<td>Returns the number of samples created for the specified session.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="querying-results">
+<h2>Querying Results<a class="headerlink" href="#querying-results" title="Permalink to this headline">¶</a></h2>
+<p>Once sampling is complete and the session has been ended, the sample results
+can be read. For DirectX 12 and Vulkan, the command list or command buffer
+which contains the samples must have been fully executed before results will be
+available.</p>
+<p>The following methods can be used to check if results are available and to read
+the results for samples:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Results Querying Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_IsPassComplete</td>
+<td>Checks whether or not a pass has finished.</td>
+</tr>
+<tr class="row-odd"><td>GPA_IsSessionComplete</td>
+<td>Checks if results for all samples within a session are available.</td>
+</tr>
+<tr class="row-even"><td>GPA_GetSampleResultSize</td>
+<td>Gets the result size for a given sample.</td>
+</tr>
+<tr class="row-odd"><td>GPA_GetSampleResult</td>
+<td>Gets the result data for a given sample.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="displaying-status-error">
+<h2>Displaying Status/Error<a class="headerlink" href="#displaying-status-error" title="Permalink to this headline">¶</a></h2>
+<p>All GPUPerfAPI functions return a GPA_Status code to indicate success or
+failure. A simple string representation of the status or error codes can be
+retrieved using the following method:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Status/Error Helper Method</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_GetStatusAsStr</td>
+<td>Gets a string representation of a GPA_Status value.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="multi-pass-counter-collection">
+<h2>Multi-pass Counter Collection<a class="headerlink" href="#multi-pass-counter-collection" title="Permalink to this headline">¶</a></h2>
+<p>Collection of some individual counters and some combinations of counters will
+require more than one pass. After enabling counters, you can query the number
+of passes required. If the number of passes is greater than one, you will need
+to execute an identical GPU workload once for each pass. For DirectX 12 and
+Vulkan, this typically means recording the same command list or command buffer
+more than once, calling GPA_BeginCommandList on each command list for each
+pass, and beginning and ending samples for the same workloads within the
+command lists. For other graphics and compute APIs, this means making the same
+draw calls or dispatching the same kernels in the same sequence multiple times.
+The same sample id must be found in every pass, and that sample id must be used
+for the same workload within each pass. If it is impossible or impractical to
+repeat the operations to be profiled, select a counter set requiring only a
+single pass. For sets requiring more than one pass, results are available only
+after all passes are complete.</p>
+</div>
+<div class="section" id="specific-usage-note-for-vulkan">
+<h2>Specific Usage Note for Vulkan<a class="headerlink" href="#specific-usage-note-for-vulkan" title="Permalink to this headline">¶</a></h2>
+<p>In order to enable counter collection in the Vulkan driver, several Vulkan
+extensions are required. The application being profiled with GPUPerfAPI will
+need to request those extensions as part of the Vulkan instance and device
+initialization. GPUPerfAPI simplifies this by defining three macros in the
+GPUPerfAPI-Vk.h header file: <code class="docutils literal"><span class="pre">AMD_GPA_REQUIRED_INSTANCE_EXTENSION_NAME_LIST</span></code>
+for the required instance extensions,
+<code class="docutils literal"><span class="pre">AMD_GPA_REQUIRED_DEVICE_EXTENSION_NAME_LIST</span></code> for the required device
+extensions and <code class="docutils literal"><span class="pre">AMD_GPA_OPTIONAL_DEVICE_EXTENSION_NAME_LIST</span></code> for optional,
+but recommended, device extensions. The extensions defined in
+<code class="docutils literal"><span class="pre">AMD_GPA_REQUIRED_INSTANCE_EXTENSION_NAME_LIST</span></code> should be included in the
+<code class="docutils literal"><span class="pre">VkInstanceCreateInfo</span></code> structure that is passed to the <code class="docutils literal"><span class="pre">vkCreateInstance</span></code>
+function. Similarly, the extensions defined in
+<code class="docutils literal"><span class="pre">AMD_GPA_REQUIRED_DEVICE_EXTENSION_NAME_LIST</span></code> and
+<code class="docutils literal"><span class="pre">AMD_GPA_OPTIONAL_DEVICE_EXTENSION_NAME_LIST</span></code> should be included in the
+<code class="docutils literal"><span class="pre">VkDeviceCreateInfo</span></code> structure that is passed to <code class="docutils literal"><span class="pre">vkCreateDevice</span></code> function.</p>
+</div>
+<div class="section" id="specific-usage-note-for-bundles-directx-12-and-secondary-command-buffers-vulkan">
+<span id="specific-usage-bundles"></span><h2>Specific Usage Note for Bundles (DirectX 12) and Secondary Command Buffers (Vulkan)<a class="headerlink" href="#specific-usage-note-for-bundles-directx-12-and-secondary-command-buffers-vulkan" title="Permalink to this headline">¶</a></h2>
+<p>While samples within a Bundle or Secondary Command Buffer (both referred to
+here as “secondary command lists”) are supported by GPUPerfAPI, they require
+special handling. Both the primary and secondary command list must be started
+using GPA_BeginCommandList. Samples can be created on both types of command
+lists; however, the samples on the secondary command list must be copied back
+to the primary command list. This is done using the GPA_CopySecondarySamples
+function. Once samples are copied back to the primary command list, results
+will be available after the primary command list has been executed. Bundles or
+secondary command buffers must be re-recorded for each counter pass. This also
+means that extra GPA_CommandListId instances must be created (one per pass for
+each bundle or secondary command buffer) in order to support copying the
+results from the bundles or secondary command buffers after execution.</p>
+</div>
+<div class="section" id="specific-usage-note-for-samples-that-start-and-end-on-different-command-lists">
+<span id="specific-usage-multiple-command-lists"></span><h2>Specific Usage Note for Samples that Start and End on Different Command Lists<a class="headerlink" href="#specific-usage-note-for-samples-that-start-and-end-on-different-command-lists" title="Permalink to this headline">¶</a></h2>
+<p>For DirectX 12 and Vulkan, GPUPerfAPI supports starting a sample on one command
+list and ending it on another. For this to work properly, the command lists
+must be executed in the correct order by the application – the command list
+which ends the sample must be executed after the command list which begins the
+sample. Both the command list where the sample starts and the command list
+where the sample ends must be started using GPA_BeginCommandList. After the
+sample has been started on the first command list using GPA_BeginSample, it can
+be continued on another command list by calling
+GPA_ContinueSampleOnCommandList. After it has been continued, the sample can be
+ended using GPA_EndSample and specifying the second command list.</p>
+</div>
+<div class="section" id="deploying-gpuperfapi">
+<h2>Deploying GPUPerfAPI<a class="headerlink" href="#deploying-gpuperfapi" title="Permalink to this headline">¶</a></h2>
+<p>To deploy an application that uses GPUPerfAPI, simply make sure that the
+necessary GPUPerfAPI library is available and can be loaded using the normal
+library search mechanism for the host operating system (i.e. in the PATH on
+Windows and LD_LIBRARY_PATH on Linux).</p>
+<p>When deploying the DirectX 11 version on Windows, you will also need to deploy
+GPUPerfAPIDXGetAMDDeviceInfo.dll or GPUPerfAPIDXGetAMDDeviceInfo-x64.dll, if you
+need to support systems with multiple AMD GPUs.  This library is used by GPA to
+determine which GPU is being used for rendering at runtime.  For single-GPU
+systems, this library is not required.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="counters.html" class="btn btn-neutral float-right" title="Performance Counters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="intro.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Advanced Micro Devices, Inc. All rights reserved.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

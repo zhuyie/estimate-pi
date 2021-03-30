@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Vega Counters &mdash; GPUPerfAPI 3.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="GPUPerfAPI 3.7 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> GPUPerfAPI
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="counters.html">Performance Counters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_api.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GPUPerfAPI</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Vega Counters</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vega-counters">
+<h1>Vega Counters<a class="headerlink" href="#vega-counters" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general-group">
+<h2>General Group<a class="headerlink" href="#general-group" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Counter Name</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Wavefronts</td>
+<td>Total wavefronts.</td>
+</tr>
+<tr class="row-odd"><td>VALUInsts</td>
+<td>The average number of vector ALU instructions executed per work-item (affected by flow control).</td>
+</tr>
+<tr class="row-even"><td>SALUInsts</td>
+<td>The average number of scalar ALU instructions executed per work-item (affected by flow control).</td>
+</tr>
+<tr class="row-odd"><td>VFetchInsts</td>
+<td>The average number of vector fetch instructions from the video memory executed per work-item (affected by flow control). Excludes FLAT instructions that fetch from video memory.</td>
+</tr>
+<tr class="row-even"><td>SFetchInsts</td>
+<td>The average number of scalar fetch instructions from the video memory executed per work-item (affected by flow control).</td>
+</tr>
+<tr class="row-odd"><td>VWriteInsts</td>
+<td>The average number of vector write instructions to the video memory executed per work-item (affected by flow control). Excludes FLAT instructions that write to video memory.</td>
+</tr>
+<tr class="row-even"><td>FlatVMemInsts</td>
+<td>The average number of FLAT instructions that read from or write to the video memory executed per work item (affected by flow control). Includes FLAT instructions that read from or write to scratch.</td>
+</tr>
+<tr class="row-odd"><td>GDSInsts</td>
+<td>The average number of GDS read or GDS write instructions executed per work item (affected by flow control).</td>
+</tr>
+<tr class="row-even"><td>VALUUtilization</td>
+<td>The percentage of active vector ALU threads in a wave. A lower number can mean either more thread divergence in a wave or that the work-group size is not a multiple of 64. Value range: 0% (bad), 100% (ideal - no thread divergence).</td>
+</tr>
+<tr class="row-odd"><td>VALUBusy</td>
+<td>The percentage of GPUTime vector ALU instructions are processed. Value range: 0% (bad) to 100% (optimal).</td>
+</tr>
+<tr class="row-even"><td>SALUBusy</td>
+<td>The percentage of GPUTime scalar ALU instructions are processed. Value range: 0% (bad) to 100% (optimal).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="localmemory-group">
+<h2>LocalMemory Group<a class="headerlink" href="#localmemory-group" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Counter Name</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>LDSInsts</td>
+<td>The average number of LDS read or LDS write instructions executed per work item (affected by flow control). Excludes FLAT instructions that read from or write to LDS.</td>
+</tr>
+<tr class="row-odd"><td>FlatLDSInsts</td>
+<td>The average number of FLAT instructions that read from or write to LDS executed per work item (affected by flow control).</td>
+</tr>
+<tr class="row-even"><td>LDSBankConflict</td>
+<td>The percentage of GPUTime LDS is stalled by bank conflicts. Value range: 0% (optimal) to 100% (bad).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="globalmemory-group">
+<h2>GlobalMemory Group<a class="headerlink" href="#globalmemory-group" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Counter Name</th>
+<th class="head">Brief Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>FetchSize</td>
+<td>The total kilobytes fetched from the video memory. This is measured with all extra fetches and any cache or memory effects taken into account.</td>
+</tr>
+<tr class="row-odd"><td>WriteSize</td>
+<td>The total kilobytes written to the video memory. This is measured with all extra fetches and any cache or memory effects taken into account.</td>
+</tr>
+<tr class="row-even"><td>L1CacheHit</td>
+<td>The percentage of fetch, write, atomic, and other instructions that hit the data in L1 cache. Value range: 0% (no hit) to 100% (optimal).</td>
+</tr>
+<tr class="row-odd"><td>L2CacheHit</td>
+<td>The percentage of fetch, write, atomic, and other instructions that hit the data in L2 cache. Value range: 0% (no hit) to 100% (optimal).</td>
+</tr>
+<tr class="row-even"><td>MemUnitBusy</td>
+<td>The percentage of GPUTime the memory unit is active. The result includes the stall time (MemUnitStalled). This is measured with all extra fetches and writes and any cache or memory effects taken into account. Value range: 0% to 100% (fetch-bound).</td>
+</tr>
+<tr class="row-odd"><td>MemUnitStalled</td>
+<td>The percentage of GPUTime the memory unit is stalled. Try reducing the number or size of fetches and writes if possible. Value range: 0% (optimal) to 100% (bad).</td>
+</tr>
+<tr class="row-even"><td>WriteUnitStalled</td>
+<td>The percentage of GPUTime the Write unit is stalled. Value range: 0% to 100% (bad).</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Advanced Micro Devices, Inc. All rights reserved.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

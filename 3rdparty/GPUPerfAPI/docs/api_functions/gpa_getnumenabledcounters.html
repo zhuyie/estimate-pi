@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>GPA_GetNumEnabledCounters &mdash; GPUPerfAPI 3.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="GPUPerfAPI 3.7 documentation" href="../index.html"/>
+        <link rel="up" title="API Reference" href="../main_api.html"/>
+        <link rel="next" title="GPA_GetPassCount" href="gpa_getpasscount.html"/>
+        <link rel="prev" title="GPA_GetNumCounters" href="gpa_getnumcounters.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GPUPerfAPI
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../counters.html">Performance Counters</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../main_api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../main_api.html#functions">Functions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gpa_begincommandlist.html">GPA_BeginCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_beginsample.html">GPA_BeginSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_beginsession.html">GPA_BeginSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_closecontext.html">GPA_CloseContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_continuesampleoncommandlist.html">GPA_ContinueSampleOnCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_copysecondarysamples.html">GPA_CopySecondarySamples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_createsession.html">GPA_CreateSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_deletesession.html">GPA_DeleteSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_destroy.html">GPA_Destroy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_disableallcounters.html">GPA_DisableAllCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_disablecounter.html">GPA_DisableCounter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_disablecounterbyname.html">GPA_DisableCounterByName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_enableallcounters.html">GPA_EnableAllCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_enablecounter.html">GPA_EnableCounter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_enablecounterbyname.html">GPA_EnableCounterByName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_endcommandlist.html">GPA_EndCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_endsample.html">GPA_EndSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_endsession.html">GPA_EndSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getcounterdatatype.html">GPA_GetCounterDataType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getcounterdescription.html">GPA_GetCounterDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getcountergroup.html">GPA_GetCounterGroup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getcounterindex.html">GPA_GetCounterIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getcountername.html">GPA_GetCounterName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getcountersampletype.html">GPA_GetCounterSampleType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getcounterusagetype.html">GPA_GetCounterUsageType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getcounteruuid.html">GPA_GetCounterUUID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getdatatypeasstr.html">GPA_GetDataTypeAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getdeviceandrevisionid.html">GPA_GetDeviceAndRevisionId</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getdevicename.html">GPA_GetDeviceName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getenabledindex.html">GPA_GetEnabledIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getfunctable.html">GPA_GetFuncTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getnumcounters.html">GPA_GetNumCounters</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GPA_GetNumEnabledCounters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#syntax">Syntax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getpasscount.html">GPA_GetPassCount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getsamplecount.html">GPA_GetSampleCount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getsampleid.html">GPA_GetSampleId</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getsampleresult.html">GPA_BeginSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getsampleresultsize.html">GPA_GetSampleResultSize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getstatusasstr.html">GPA_GetStatusAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getsupportedsampletypes.html">GPA_GetSupportedSampleTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getusagetypeasstr.html">GPA_GetUsageTypeAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_getversion.html">GPA_GetVersion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_initialize.html">GPA_Initialize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_iscounterenabled.html">GPA_IsCounterEnabled</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_ispasscomplete.html">GPA_IsPassComplete</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_issessioncomplete.html">GPA_IsSessionComplete</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_opencontext.html">GPA_OpenContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpa_registerloggingcallback.html">GPA_RegisterLoggingCallback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../main_api.html#types">Types</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GPUPerfAPI</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../main_api.html">API Reference</a> &raquo;</li>
+        
+      <li>GPA_GetNumEnabledCounters</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gpa-getnumenabledcounters">
+<h1>GPA_GetNumEnabledCounters<a class="headerlink" href="#gpa-getnumenabledcounters" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="syntax">
+<h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++"><div class="highlight"><pre><span></span><span class="n">GPA_Status</span> <span class="nf">GPA_GetNumEnabledCounters</span><span class="p">(</span>
+    <span class="n">GPA_SessionId</span> <span class="n">sessionId</span><span class="p">,</span>
+    <span class="n">gpa_uint32</span><span class="o">*</span> <span class="n">pCount</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Gets the number of enabled counters.</p>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="35%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">sessionId</span></code></td>
+<td>Unique identifier of a previously-created session.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">pCount</span></code></td>
+<td>The value which will hold the number of enabled counters contained within the session upon successful execution.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="return-value">
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="35%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Return value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GPA_STATUS_OK</td>
+<td>The number of enabled counters was successfully retrieved.</td>
+</tr>
+<tr class="row-odd"><td>GPA_STATUS_ERROR_NULL_POINTER</td>
+<td><div class="first last line-block">
+<div class="line">The supplied <code class="docutils literal"><span class="pre">sessionId</span></code> parameter is NULL.</div>
+<div class="line">The supplied <code class="docutils literal"><span class="pre">pCount</span></code> parameter is NULL.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>GPA_STATUS_ERROR_SESSION_NOT_FOUND</td>
+<td>The supplied <code class="docutils literal"><span class="pre">sessionId</span></code> parameter was not recognized as a previously-created session identifier.</td>
+</tr>
+<tr class="row-odd"><td>GPA_STATUS_ERROR_CONTEXT_NOT_OPEN</td>
+<td>The supplied session’s parent context is not currently open.</td>
+</tr>
+<tr class="row-even"><td>GPA_STATUS_ERROR_FAILED</td>
+<td>The number of enabled counters could not be retrieved.</td>
+</tr>
+<tr class="row-odd"><td>GPA_STATUS_ERROR_EXCEPTION</td>
+<td>Exception occurred.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gpa_getpasscount.html" class="btn btn-neutral float-right" title="GPA_GetPassCount" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gpa_getnumcounters.html" class="btn btn-neutral" title="GPA_GetNumCounters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Advanced Micro Devices, Inc. All rights reserved.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

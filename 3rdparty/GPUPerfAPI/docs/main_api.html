@@ -1,0 +1,639 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Reference &mdash; GPUPerfAPI 3.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="GPUPerfAPI 3.7 documentation" href="index.html"/>
+        <link rel="next" title="GPA_BeginCommandList" href="api_functions/gpa_begincommandlist.html"/>
+        <link rel="prev" title="Performance Counters" href="counters.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> GPUPerfAPI
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="counters.html">Performance Counters</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_begincommandlist.html">GPA_BeginCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_beginsample.html">GPA_BeginSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_beginsession.html">GPA_BeginSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_closecontext.html">GPA_CloseContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_continuesampleoncommandlist.html">GPA_ContinueSampleOnCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_copysecondarysamples.html">GPA_CopySecondarySamples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_createsession.html">GPA_CreateSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_deletesession.html">GPA_DeleteSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_destroy.html">GPA_Destroy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_disableallcounters.html">GPA_DisableAllCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_disablecounter.html">GPA_DisableCounter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_disablecounterbyname.html">GPA_DisableCounterByName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_enableallcounters.html">GPA_EnableAllCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_enablecounter.html">GPA_EnableCounter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_enablecounterbyname.html">GPA_EnableCounterByName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_endcommandlist.html">GPA_EndCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_endsample.html">GPA_EndSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_endsession.html">GPA_EndSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounterdatatype.html">GPA_GetCounterDataType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounterdescription.html">GPA_GetCounterDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcountergroup.html">GPA_GetCounterGroup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounterindex.html">GPA_GetCounterIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcountername.html">GPA_GetCounterName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcountersampletype.html">GPA_GetCounterSampleType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounterusagetype.html">GPA_GetCounterUsageType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounteruuid.html">GPA_GetCounterUUID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getdatatypeasstr.html">GPA_GetDataTypeAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getdeviceandrevisionid.html">GPA_GetDeviceAndRevisionId</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getdevicename.html">GPA_GetDeviceName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getenabledindex.html">GPA_GetEnabledIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getfunctable.html">GPA_GetFuncTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getnumcounters.html">GPA_GetNumCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getnumenabledcounters.html">GPA_GetNumEnabledCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getpasscount.html">GPA_GetPassCount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsamplecount.html">GPA_GetSampleCount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsampleid.html">GPA_GetSampleId</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsampleresult.html">GPA_BeginSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsampleresultsize.html">GPA_GetSampleResultSize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getstatusasstr.html">GPA_GetStatusAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsupportedsampletypes.html">GPA_GetSupportedSampleTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getusagetypeasstr.html">GPA_GetUsageTypeAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getversion.html">GPA_GetVersion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_initialize.html">GPA_Initialize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_iscounterenabled.html">GPA_IsCounterEnabled</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_ispasscomplete.html">GPA_IsPassComplete</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_issessioncomplete.html">GPA_IsSessionComplete</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_opencontext.html">GPA_OpenContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_registerloggingcallback.html">GPA_RegisterLoggingCallback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#types">Types</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GPUPerfAPI</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-reference">
+<span id="gpa-api-reference"></span><h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_begincommandlist.html">GPA_BeginCommandList</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_begincommandlist.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_begincommandlist.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_begincommandlist.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_begincommandlist.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_beginsample.html">GPA_BeginSample</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_beginsample.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_beginsample.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_beginsample.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_beginsample.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_beginsession.html">GPA_BeginSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_beginsession.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_beginsession.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_beginsession.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_beginsession.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_closecontext.html">GPA_CloseContext</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_closecontext.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_closecontext.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_closecontext.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_closecontext.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_continuesampleoncommandlist.html">GPA_ContinueSampleOnCommandList</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_continuesampleoncommandlist.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_continuesampleoncommandlist.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_continuesampleoncommandlist.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_continuesampleoncommandlist.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_copysecondarysamples.html">GPA_CopySecondarySamples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_copysecondarysamples.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_copysecondarysamples.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_copysecondarysamples.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_copysecondarysamples.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_createsession.html">GPA_CreateSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_createsession.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_createsession.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_createsession.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_createsession.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_deletesession.html">GPA_DeleteSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_deletesession.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_deletesession.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_deletesession.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_deletesession.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_destroy.html">GPA_Destroy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_destroy.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_destroy.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_destroy.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_disableallcounters.html">GPA_DisableAllCounters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disableallcounters.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disableallcounters.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disableallcounters.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disableallcounters.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_disablecounter.html">GPA_DisableCounter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disablecounter.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disablecounter.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disablecounter.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disablecounter.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_disablecounterbyname.html">GPA_DisableCounterByName</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disablecounterbyname.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disablecounterbyname.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disablecounterbyname.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_disablecounterbyname.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_enableallcounters.html">GPA_EnableAllCounters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enableallcounters.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enableallcounters.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enableallcounters.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enableallcounters.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_enablecounter.html">GPA_EnableCounter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enablecounter.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enablecounter.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enablecounter.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enablecounter.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_enablecounterbyname.html">GPA_EnableCounterByName</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enablecounterbyname.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enablecounterbyname.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enablecounterbyname.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_enablecounterbyname.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_endcommandlist.html">GPA_EndCommandList</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endcommandlist.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endcommandlist.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endcommandlist.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endcommandlist.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_endsample.html">GPA_EndSample</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endsample.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endsample.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endsample.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endsample.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_endsession.html">GPA_EndSession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endsession.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endsession.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endsession.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_endsession.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getcounterdatatype.html">GPA_GetCounterDataType</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterdatatype.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterdatatype.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterdatatype.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterdatatype.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getcounterdescription.html">GPA_GetCounterDescription</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterdescription.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterdescription.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterdescription.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterdescription.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getcountergroup.html">GPA_GetCounterGroup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountergroup.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountergroup.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountergroup.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountergroup.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getcounterindex.html">GPA_GetCounterIndex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterindex.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterindex.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterindex.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterindex.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getcountername.html">GPA_GetCounterName</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountername.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountername.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountername.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountername.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getcountersampletype.html">GPA_GetCounterSampleType</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountersampletype.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountersampletype.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountersampletype.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcountersampletype.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getcounterusagetype.html">GPA_GetCounterUsageType</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterusagetype.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterusagetype.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterusagetype.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounterusagetype.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getcounteruuid.html">GPA_GetCounterUUID</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounteruuid.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounteruuid.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounteruuid.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getcounteruuid.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getdatatypeasstr.html">GPA_GetDataTypeAsStr</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdatatypeasstr.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdatatypeasstr.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdatatypeasstr.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdatatypeasstr.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getdeviceandrevisionid.html">GPA_GetDeviceAndRevisionId</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdeviceandrevisionid.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdeviceandrevisionid.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdeviceandrevisionid.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdeviceandrevisionid.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getdevicename.html">GPA_GetDeviceName</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdevicename.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdevicename.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdevicename.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getdevicename.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getenabledindex.html">GPA_GetEnabledIndex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getenabledindex.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getenabledindex.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getenabledindex.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getenabledindex.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getfunctable.html">GPA_GetFuncTable</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getfunctable.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getfunctable.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getfunctable.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getfunctable.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getnumcounters.html">GPA_GetNumCounters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getnumcounters.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getnumcounters.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getnumcounters.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getnumcounters.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getnumenabledcounters.html">GPA_GetNumEnabledCounters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getnumenabledcounters.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getnumenabledcounters.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getnumenabledcounters.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getnumenabledcounters.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getpasscount.html">GPA_GetPassCount</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getpasscount.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getpasscount.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getpasscount.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getpasscount.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getsamplecount.html">GPA_GetSampleCount</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsamplecount.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsamplecount.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsamplecount.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsamplecount.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getsampleid.html">GPA_GetSampleId</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleid.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleid.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleid.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleid.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getsampleresult.html">GPA_BeginSample</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleresult.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleresult.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleresult.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleresult.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getsampleresultsize.html">GPA_GetSampleResultSize</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleresultsize.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleresultsize.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleresultsize.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsampleresultsize.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getstatusasstr.html">GPA_GetStatusAsStr</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getstatusasstr.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getstatusasstr.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getstatusasstr.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getstatusasstr.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getsupportedsampletypes.html">GPA_GetSupportedSampleTypes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsupportedsampletypes.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsupportedsampletypes.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsupportedsampletypes.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getsupportedsampletypes.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getusagetypeasstr.html">GPA_GetUsageTypeAsStr</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getusagetypeasstr.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getusagetypeasstr.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getusagetypeasstr.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getusagetypeasstr.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_getversion.html">GPA_GetVersion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getversion.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getversion.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getversion.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_getversion.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_initialize.html">GPA_Initialize</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_initialize.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_initialize.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_initialize.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_initialize.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_iscounterenabled.html">GPA_IsCounterEnabled</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_iscounterenabled.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_iscounterenabled.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_iscounterenabled.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_iscounterenabled.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_ispasscomplete.html">GPA_IsPassComplete</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_ispasscomplete.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_ispasscomplete.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_ispasscomplete.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_ispasscomplete.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_issessioncomplete.html">GPA_IsSessionComplete</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_issessioncomplete.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_issessioncomplete.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_issessioncomplete.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_issessioncomplete.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_opencontext.html">GPA_OpenContext</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_opencontext.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_opencontext.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_opencontext.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_opencontext.html#return-value">Return value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_functions/gpa_registerloggingcallback.html">GPA_RegisterLoggingCallback</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_registerloggingcallback.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_registerloggingcallback.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_registerloggingcallback.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_functions/gpa_registerloggingcallback.html#return-value">Return value</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<p>For information on the various typedefs, enumerations, and macros used in the
+GPUPerfAPI interface, please refer to the declarations in the GPUPerfAPITypes.h
+header file.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api_functions/gpa_begincommandlist.html" class="btn btn-neutral float-right" title="GPA_BeginCommandList" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="counters.html" class="btn btn-neutral" title="Performance Counters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Advanced Micro Devices, Inc. All rights reserved.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

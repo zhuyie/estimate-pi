@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to GPUPerfAPI’s documentation! &mdash; GPUPerfAPI 3.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="GPUPerfAPI 3.7 documentation" href="#"/>
+        <link rel="next" title="Introduction" href="intro.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> GPUPerfAPI
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="counters.html">Performance Counters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main_api.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">GPUPerfAPI</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to GPUPerfAPI’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-gpuperfapi-s-documentation">
+<h1>Welcome to GPUPerfAPI’s documentation!<a class="headerlink" href="#welcome-to-gpuperfapi-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#loading-the-gpuperfapi-library">Loading the GPUPerfAPI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#registering-a-logging-callback">Registering a Logging Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#initializing-and-destroying-a-gpuperfapi-instance">Initializing and Destroying a GPUPerfAPI Instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#opening-and-closing-a-context">Opening and Closing a Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#querying-a-context-and-counters">Querying a Context and Counters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#creating-and-using-a-session">Creating and Using a Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#enabling-counters-on-a-session">Enabling Counters on a Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#querying-enabled-counters-and-counter-scheduling">Querying Enabled Counters and Counter Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#creating-and-managing-samples">Creating and Managing Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#querying-results">Querying Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#displaying-status-error">Displaying Status/Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#multi-pass-counter-collection">Multi-pass Counter Collection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#specific-usage-note-for-vulkan">Specific Usage Note for Vulkan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#specific-usage-note-for-bundles-directx-12-and-secondary-command-buffers-vulkan">Specific Usage Note for Bundles (DirectX 12) and Secondary Command Buffers (Vulkan)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#specific-usage-note-for-samples-that-start-and-end-on-different-command-lists">Specific Usage Note for Samples that Start and End on Different Command Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#deploying-gpuperfapi">Deploying GPUPerfAPI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="counters.html">Performance Counters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="counters.html#counters-exposed-for-graphics-performance-analysis">Counters Exposed for Graphics Performance Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="counters.html#rdna2-counters">RDNA2 Counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="counters.html#rdna-counters">RDNA Counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="counters.html#vega-counters">Vega Counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="counters.html#graphics-ip-v8-counters">Graphics IP v8 Counters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="counters.html#counters-exposed-for-compute-performance-analysis">Counters Exposed for Compute Performance Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="counters.html#id35">RDNA2 Counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="counters.html#id37">RDNA Counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="counters.html#id41">Vega Counters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="counters.html#id45">Graphics IP v8 Counters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main_api.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="main_api.html#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_begincommandlist.html">GPA_BeginCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_beginsample.html">GPA_BeginSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_beginsession.html">GPA_BeginSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_closecontext.html">GPA_CloseContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_continuesampleoncommandlist.html">GPA_ContinueSampleOnCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_copysecondarysamples.html">GPA_CopySecondarySamples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_createsession.html">GPA_CreateSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_deletesession.html">GPA_DeleteSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_destroy.html">GPA_Destroy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_disableallcounters.html">GPA_DisableAllCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_disablecounter.html">GPA_DisableCounter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_disablecounterbyname.html">GPA_DisableCounterByName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_enableallcounters.html">GPA_EnableAllCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_enablecounter.html">GPA_EnableCounter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_enablecounterbyname.html">GPA_EnableCounterByName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_endcommandlist.html">GPA_EndCommandList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_endsample.html">GPA_EndSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_endsession.html">GPA_EndSession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounterdatatype.html">GPA_GetCounterDataType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounterdescription.html">GPA_GetCounterDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcountergroup.html">GPA_GetCounterGroup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounterindex.html">GPA_GetCounterIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcountername.html">GPA_GetCounterName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcountersampletype.html">GPA_GetCounterSampleType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounterusagetype.html">GPA_GetCounterUsageType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getcounteruuid.html">GPA_GetCounterUUID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getdatatypeasstr.html">GPA_GetDataTypeAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getdeviceandrevisionid.html">GPA_GetDeviceAndRevisionId</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getdevicename.html">GPA_GetDeviceName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getenabledindex.html">GPA_GetEnabledIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getfunctable.html">GPA_GetFuncTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getnumcounters.html">GPA_GetNumCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getnumenabledcounters.html">GPA_GetNumEnabledCounters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getpasscount.html">GPA_GetPassCount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsamplecount.html">GPA_GetSampleCount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsampleid.html">GPA_GetSampleId</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsampleresult.html">GPA_BeginSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsampleresultsize.html">GPA_GetSampleResultSize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getstatusasstr.html">GPA_GetStatusAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getsupportedsampletypes.html">GPA_GetSupportedSampleTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getusagetypeasstr.html">GPA_GetUsageTypeAsStr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_getversion.html">GPA_GetVersion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_initialize.html">GPA_Initialize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_iscounterenabled.html">GPA_IsCounterEnabled</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_ispasscomplete.html">GPA_IsPassComplete</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_issessioncomplete.html">GPA_IsSessionComplete</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_opencontext.html">GPA_OpenContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_functions/gpa_registerloggingcallback.html">GPA_RegisterLoggingCallback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="main_api.html#types">Types</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Advanced Micro Devices, Inc. All rights reserved.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
