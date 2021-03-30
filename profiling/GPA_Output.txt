@@ -1,0 +1,84 @@
+PS C:\Users\zhuyie\Desktop\code\estimate-pi\build> .\estimate_pi_opencl.exe 1 pi_v1
+device_index: 1
+kernel: pi_v1
+profiling: 1
+
+Device_1: gfx1012
+    Hardware version: OpenCL 2.0 AMD-APP (2906.10)
+    Software version: 2906.10 (PAL,LC)
+
+Selected Device: Device_1
+
+GPA init OK, numPasses=3
+
+local_work_size = 256
+global_work_size = 100096
+iterates = 10000
+samples = 1000960000 (1000000000 required)
+duration = 254.60ms
+pi = 3.141642 (0.001571% error)
+
+-------- GPA RESULT --------
+01_Wavefronts: 3128.0000
+02_VALUInsts: 558036.0000
+03_SALUInsts: 173678.0000
+04_VFetchInsts: 100000.0000
+05_SFetchInsts: 4.0000
+06_VWriteInsts: 40658.0000
+07_LDSInsts: 0.0000
+08_GDSInsts: 0.0000
+09_VALUUtilization: 100.0000
+10_VALUBusy: 11.2818
+11_SALUBusy: 6.9990
+12_FetchSize: 15627819.9375
+13_WriteSize: 8110749.6875
+14_L0CacheHit: 39.5099
+15_L1CacheHit: 0.0455
+16_L2CacheHit: 69.4942
+17_MemUnitBusy: 98.1590
+18_MemUnitStalled: 0.0913
+19_WriteUnitStalled: 0.1534
+20_LDSBankConflict: 0.0000
+
+
+PS C:\Users\zhuyie\Desktop\code\estimate-pi\build> .\estimate_pi_opencl.exe 1 pi_v2
+device_index: 1
+kernel: pi_v2
+profiling: 1
+
+Device_1: gfx1012
+    Hardware version: OpenCL 2.0 AMD-APP (2906.10)
+    Software version: 2906.10 (PAL,LC)
+
+Selected Device: Device_1
+
+GPA init OK, numPasses=3
+
+local_work_size = 256
+global_work_size = 100096
+iterates = 10000
+samples = 1000960000 (1000000000 required)
+duration = 34.82ms
+pi = 3.141651 (0.001870% error)
+
+-------- GPA RESULT --------
+01_Wavefronts: 3128.0000
+02_VALUInsts: 570188.8114
+03_SALUInsts: 10512.6646
+04_VFetchInsts: 0.0000
+05_SFetchInsts: 47.6036
+06_VWriteInsts: 0.0000
+07_LDSInsts: 0.0000
+08_GDSInsts: 0.0000
+09_VALUUtilization: 98.7562
+10_VALUBusy: 91.8628
+11_SALUBusy: 3.3870
+12_FetchSize: 19.2500
+13_WriteSize: 15472.8438
+14_L0CacheHit: 47.6662
+15_L1CacheHit: 14.6806
+16_L2CacheHit: 53.6190
+17_MemUnitBusy: 5.2718
+18_MemUnitStalled: 0.0000
+19_WriteUnitStalled: 0.0068
+20_LDSBankConflict: 0.0000
