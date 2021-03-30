@@ -35,6 +35,11 @@ public:
         data_.resize(size);
         f.seekg(0);
         f.read(&data_[0], size);
+        // some file may contains trailing '\0'
+        size_t sz = strlen(&data_[0]);
+        if (sz < size)
+            data_.resize(sz);
+        // make sure we end with a '\n'
         if (data_.empty() || data_.back() != '\n')
             data_.append(1, '\n');
         return true;
@@ -166,7 +171,7 @@ int main(int argc, char* argv[])
         device_index = atoi(argv[1]) - 1;
         if (device_index < 0 || device_index >= (int)numDevices)
         {
-            fprintf(stderr, "Invalid device_index!\n");
+            fprintf(stderr, "Invalid device_index '%s'!\n", argv[1]);
             return EXIT_FAILURE;
         }
     }
