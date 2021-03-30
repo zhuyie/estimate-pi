@@ -5,7 +5,8 @@ Implements Mersenne twister generator.
 
 M. Matsumoto, T. Nishimura, Mersenne twister: a 623-dimensionally equidistributed uniform pseudo-random number generator, ACM Transactions on Modeling and Computer Simulation (TOMACS) 8 (1) (1998) 3–30.
 */
-#pragma once
+#ifndef MT19937_CL
+#define MT19937_CL
 
 #define RNG32
 
@@ -149,3 +150,5 @@ Generates a random double using MT19937 RNG. Generated using only 32 random bits
 @param state State of the RNG to use.
 */
 #define mt19937_double2(state) (mt19937_uint(state)*MT19937_DOUBLE2_MULTI)
+
+#endif /* EOF */
