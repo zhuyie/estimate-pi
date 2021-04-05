@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_END
             return nil;
         }
 */
-        id<MTLFunction> piFunction = [lib newFunctionWithName:@"pi"];
+        id<MTLFunction> piFunction = [lib newFunctionWithName:@"pi_v1"];
         if (piFunction == nil)
         {
             NSLog(@"Failed to find the pi function.");
