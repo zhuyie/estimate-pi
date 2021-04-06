@@ -14,3 +14,6 @@ Some test numbers:
   - samples = 1,000,960,000
   - pi_v1 kernel, 258.64 ms (34x)
   - pi_v2 kernel, 32.69 ms (267x)
+- Metal
+  - samples = 1,000,000,000
+  - 35.63 ms (247x)
