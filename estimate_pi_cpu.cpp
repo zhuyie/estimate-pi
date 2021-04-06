@@ -20,10 +20,12 @@ static void usage()
 
 class RandomNumber
 {
+#if USE_TINYMT
+    tinymt32j_t tinymt_;
+#else
     mt19937 mt19937_;  // random number generator
     const float MT19937_FLOAT_MULTI = 2.3283064365386962890625e-10f; // (2^32-1)^-1
-    tinymt32j_t tinymt_;
-
+#endif
 public:
     void seed(unsigned int seed)
     {
