@@ -9,6 +9,9 @@
 using namespace std;
 using namespace chrono;
 
+#include "tinymt32j.h"
+#define USE_TINYMT 1
+
 static void usage()
 {
     fprintf(stdout, "usage: estimate_pi_cpu num_threads num_samples\n");
@@ -17,19 +20,26 @@ static void usage()
 
 class RandomNumber
 {
-    mt19937 gen_;  // random number generator
+    mt19937 mt19937_;  // random number generator
     const float MT19937_FLOAT_MULTI = 2.3283064365386962890625e-10f; // (2^32-1)^-1
+    tinymt32j_t tinymt_;
+
 public:
-    RandomNumber() : gen_()
+    void seed(unsigned int seed)
     {
+    #if USE_TINYMT
+        tinymt32j_init_jump(&tinymt_, 42, seed);
+    #else
+        mt19937_.seed(seed);
+    #endif
     }
     float operator() ()
     {
-        return gen_() * MT19937_FLOAT_MULTI;
-    }
-    void seed(unsigned int z)
-    {
-        gen_.seed(z);
+    #if USE_TINYMT
+        return tinymt32j_single01(&tinymt_);
+    #else
+        return mt19937_() * MT19937_FLOAT_MULTI;
+    #endif
     }
 };
 
